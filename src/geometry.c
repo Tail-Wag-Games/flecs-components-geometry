@@ -3,36 +3,36 @@
 
 ECS_DECLARE(EcsGeometry);
 
-ECS_COPY(EcsMesh, dst, src, {
-    if (dst->vertices) {
-        ecs_os_free(dst->vertices);
-    }
+// ECS_COPY(EcsMesh, dst, src, {
+//     if (dst->vertices) {
+//         ecs_os_free(dst->vertices);
+//     }
 
-    if (src->vertices) {
-        size_t size = sizeof(vec3) * src->vertex_count;
-        dst->vertices = ecs_os_malloc(size);
-        dst->vertex_count = src->vertex_count;
-        memcpy(dst->vertices, src->vertices, size);
-    } else {
-        dst->vertices = NULL;
-        dst->vertex_count = 0;
-    }
-})
+//     if (src->vertices) {
+//         size_t size = sizeof(vec3) * src->vertex_count;
+//         dst->vertices = ecs_os_malloc(size);
+//         dst->vertex_count = src->vertex_count;
+//         memcpy(dst->vertices, src->vertices, size);
+//     } else {
+//         dst->vertices = NULL;
+//         dst->vertex_count = 0;
+//     }
+// })
 
-ECS_MOVE(EcsMesh, dst, src, {
-    if (dst->vertices) {
-        ecs_os_free(dst->vertices);
-    }
+// ECS_MOVE(EcsMesh, dst, src, {
+//     if (dst->vertices) {
+//         ecs_os_free(dst->vertices);
+//     }
 
-    dst->vertices = src->vertices;
-    dst->vertex_count = src->vertex_count;
-    src->vertices = NULL;
-    src->vertex_count = 0;
-})
+//     dst->vertices = src->vertices;
+//     dst->vertex_count = src->vertex_count;
+//     src->vertices = NULL;
+//     src->vertex_count = 0;
+// })
 
-ECS_DTOR(EcsMesh, ptr, {
-    ecs_os_free(ptr->vertices);
-})
+// ECS_DTOR(EcsMesh, ptr, {
+//     ecs_os_free(ptr->vertices);
+// })
 
 void FlecsComponentsGeometryImport(
     ecs_world_t *world)
@@ -49,9 +49,12 @@ void FlecsComponentsGeometryImport(
     ECS_META_COMPONENT(world, EcsSquare);
     ECS_META_COMPONENT(world, EcsBox);
     ECS_META_COMPONENT(world, EcsCircle);
+    ECS_META_COMPONENT(world, EcsMesh);
+    ECS_META_COMPONENT(world, SokolSkin);
 
     ECS_TAG_DEFINE(world, EcsGeometry);
 
     ecs_add_pair(world, ecs_id(EcsRectangle), EcsWith, EcsGeometry);
     ecs_add_pair(world, ecs_id(EcsBox), EcsWith, EcsGeometry);
+    ecs_add_pair(world, ecs_id(EcsMesh), EcsWith, EcsGeometry);
 }

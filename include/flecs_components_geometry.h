@@ -52,13 +52,43 @@ ECS_STRUCT(EcsBox, {
 });
 
 FLECS_COMPONENTS_GEOMETRY_API
+ECS_STRUCT(SokolSkin, {
+    float joint_uv[2];
+});
+
+typedef SokolSkin sokol_skin_t;
+
+// FLECS_COMPONENTS_GEOMETRY_API
+// ECS_STRUCT(EcsMeshVertex, {
+//     float position[3];
+//     uint32_t normal;
+//     uint32_t joint_indices;
+//     uint32_t joint_weights;
+// });
+
+// typedef EcsMeshVertex ecs_mesh_vertex_t;
+
+// FLECS_COMPONENTS_GEOMETRY_API
+// ECS_STRUCT(EcsMesh, {
+//     EcsMeshVertex *vertices;
+//     int32_t vertex_count;
+//     int32_t joint_texture_width;
+//     int32_t joint_texture_height;
+// });
+
+FLECS_COMPONENTS_GEOMETRY_API
+ECS_STRUCT(EcsMesh, {
+    char _unused;
+});
+
+FLECS_COMPONENTS_GEOMETRY_API
 extern ECS_DECLARE(EcsGeometry);
 
 // Not yet supported
-typedef struct EcsMesh {
-    vec3 *vertices;
-    int32_t vertex_count;
-} EcsMesh;
+// typedef struct EcsMesh {
+//     vec3 *vertices;
+//     int32_t vertex_count;
+// } EcsMesh;
 
 #ifdef __cplusplus
 extern "C" {
@@ -86,6 +116,7 @@ public:
     using Square = EcsSquare;
     using Circle = EcsCircle;
     using Box = EcsBox;
+    using Mesh = EcsMesh;
 
     geometry(flecs::world& ecs) {
         // Load module contents
@@ -99,6 +130,7 @@ public:
         ecs.component<Square>();
         ecs.component<Circle>();
         ecs.component<Box>();
+        ecs.component<Mesh>();
     }
 };
 
